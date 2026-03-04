@@ -10,7 +10,6 @@ public class Main {
 
 
 //        main program
-
         while(true){
             NumberDisplay numberDisplay = new NumberDisplay();
 
