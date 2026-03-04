@@ -1,4 +1,5 @@
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -7,16 +8,21 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
 
+        ProductList pr =  new ProductList();
+
+        Pagination p1 = new Pagination();
+
+
+        System.out.println("\t\t---------Stock Management---------\t\t");
+        Pagination.loadProducts();
 
 
 //        main program
         while(true){
-            NumberDisplay numberDisplay = new NumberDisplay();
 
             InputString input = new InputString();
             System.out.println();
-            System.out.println("\t\t---------Stock Management---------\t\t");
-            Pagination.displayProductName();
+
             System.out.println();
             System.out.println("\t\t\t---------Menu---------\t\t");
             System.out.println();
@@ -30,6 +36,7 @@ public class Main {
             System.out.println("\t\t----------------------------------------");
             System.out.println();
 
+
 //        regex validation
             input.inputType();
             if(input.output.equalsIgnoreCase("n")){
@@ -38,7 +45,7 @@ public class Main {
 
             }
             else if(input.output.equalsIgnoreCase("p")){
-
+                Pagination.previousPage();
 
 
             }
@@ -52,22 +59,28 @@ public class Main {
 
             }
             else if(input.output.equalsIgnoreCase("w")){
+                pr.addProduct();
+                Pagination.loadProducts();
 
-                break;
             }
             else if(input.output.equalsIgnoreCase("r")){
+                ReadById r = new ReadById();
+                r.displayProductById();
 
-                break;
             }
             else if(input.output.equalsIgnoreCase("up")){
+                System.out.println();
+                pr.updateProduct();
+                Pagination.loadProducts();
 
-                break;
             }
             else if(input.output.equalsIgnoreCase("d")){
 
-                break;
+
+                pr.deleteProduct();
             }
             else if(input.output.equalsIgnoreCase("s")){
+                SearchByName.search();
 
                 break;
             }

@@ -9,7 +9,12 @@
     <orderEntry type="library" name="postgresql-42.2.29.jre8" level="project" />
     <orderEntry type="library" name="postgresql-42.2.29.jre10" level="project" />
     <orderEntry type="library" name="text-table-formatter-1.1.4" level="project" />
+<<<<<<< HEAD
     <orderEntry type="library" name="text-table-formatter-1.1.5" level="project" />
     <orderEntry type="library" name="postgresql-42.2.29.jre11" level="project" />
+=======
+    <orderEntry type="library" name="postgresql-42.2.29.jre11" level="project" />
+    <orderEntry type="library" name="text-table-formatter-1.1.5" level="project" />
+>>>>>>> 84acb8a4d7230589bdd1efae49277cfa05dd7dbb
   </component>
 </module>

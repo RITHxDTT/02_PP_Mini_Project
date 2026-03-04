@@ -1,7 +1,11 @@
 <component name="libraryTable">
   <library name="postgresql-42.2.29.jre11">
     <CLASSES>
+<<<<<<< HEAD
       <root url="jar://$USER_HOME$/Downloads/Telegram Desktop/postgresql-42.2.29.jre7.jar!/" />
+=======
+      <root url="jar://$USER_HOME$/Downloads/postgresql-42.2.29.jre7.jar!/" />
+>>>>>>> 84acb8a4d7230589bdd1efae49277cfa05dd7dbb
     </CLASSES>
     <JAVADOC />
     <SOURCES />
