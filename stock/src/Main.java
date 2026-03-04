@@ -7,21 +7,20 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
 
-        NumberDisplay numberDisplay = new NumberDisplay();
-
-
 
 
 //        main program
-
         while(true){
+            NumberDisplay numberDisplay = new NumberDisplay();
+
             InputString input = new InputString();
             System.out.println();
             System.out.println("\t\t---------Stock Management---------\t\t");
-            numberDisplay.displayProductName();
+            Pagination.displayProductName();
             System.out.println();
             System.out.println("\t\t\t---------Menu---------\t\t");
             System.out.println();
+
             System.out.println("\t N. Next Page \t P. Previous Page\t F. First page\t L. Last page\t ");
             System.out.println();
             System.out.println("W) Write \t R) Read\t Up) Update\t D) Delete\t S) Search (name)\t Se) Set rows ");
@@ -30,10 +29,11 @@ public class Main {
             System.out.println();
             System.out.println("\t\t----------------------------------------");
             System.out.println();
+
 //        regex validation
             input.inputType();
             if(input.output.equalsIgnoreCase("n")){
-                NextPage.nextPage();
+                Pagination.nextPage();
 
 
             }
@@ -43,12 +43,12 @@ public class Main {
 
             }
             else if(input.output.equalsIgnoreCase("f")){
-                FirstPage.firstPage();
+                Pagination.firstPage();
 
 
             }
             else if(input.output.equalsIgnoreCase("l")){
-                LastPage.lastPage();
+                Pagination.lastPage();
 
             }
             else if(input.output.equalsIgnoreCase("w")){
@@ -64,10 +64,12 @@ public class Main {
                 break;
             }
             else if(input.output.equalsIgnoreCase("d")){
-                DeleteById.deleteData();
+
+                break;
             }
             else if(input.output.equalsIgnoreCase("s")){
-                SearchByName.search();
+
+                break;
             }
             else if(input.output.equalsIgnoreCase("se")){
 
