@@ -1,19 +1,14 @@
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
-
 public class ProductList {
-    List<Products> products = new ArrayList<>();
+
 
     public void addProduct() {
-        try (Scanner sc = new Scanner(System.in);
-             Connection con = DbConncetion.getConnection()) {
 
-            if (con != null) {
-                System.out.println("Database connected successfully!");
-            }
+        Scanner sc = new Scanner(System.in);
+
+        try (Connection con = DbConncetion.getConnection()) {
 
             String sql = "INSERT INTO products(name, unitprice, qty, importdate) VALUES (?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -22,44 +17,46 @@ public class ProductList {
             String name = sc.nextLine();
 
             System.out.print("Please input Unit Price: ");
-            double unitPrice = sc.nextDouble(); sc.nextLine();
+            double unitPrice = sc.nextDouble();
+            sc.nextLine();
 
             System.out.print("Please input Quantity: ");
-            int qty = sc.nextInt(); sc.nextLine();
+            int qty = sc.nextInt();
+            sc.nextLine();
 
             System.out.print("Please input Date (yyyy-mm-dd): ");
             String date = sc.nextLine();
 
-            java.sql.Date sqlDate;
-            try {
-                sqlDate = java.sql.Date.valueOf(date);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Invalid date format! Use yyyy-mm-dd");
-                return;
-            }
-
             ps.setString(1, name);
             ps.setDouble(2, unitPrice);
             ps.setInt(3, qty);
-            ps.setDate(4, sqlDate);
+            ps.setDate(4, java.sql.Date.valueOf(date));
 
             int row = ps.executeUpdate();
+
             ResultSet rs = ps.getGeneratedKeys();
             int id = 0;
             if (rs.next()) {
                 id = rs.getInt(1);
             }
 
-            products.add(new Products(id, name, unitPrice, qty, date));
-
             if (row == 1) {
                 System.out.println("Add success! Product ID: " + id);
+
+
+                Pagination.products.add(
+                        new Products(id, name, unitPrice, qty, date)
+                );
+
+                Pagination.total++;
             }
 
-        } catch (SQLException e) {
-            System.out.println("Database error: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
+
+
 
     public void updateProduct() {
 
@@ -67,28 +64,26 @@ public class ProductList {
 
         try (Connection con = DbConncetion.getConnection()) {
 
-            String sql = "UPDATE products SET name = ?, unitprice = ?, qty = ?, importdate = ? WHERE id = ?";
+            String sql = "UPDATE products SET name=?, unitprice=?, qty=?, importdate=? WHERE id=?";
             PreparedStatement ps = con.prepareStatement(sql);
-
 
             System.out.print("Please input product id: ");
             int id = sc.nextInt();
             sc.nextLine();
 
-            System.out.print("Please input new product name: ");
+            System.out.print("New product name: ");
             String name = sc.nextLine();
 
-            System.out.print("Please input new unit price: ");
+            System.out.print("New unit price: ");
             double unitPrice = sc.nextDouble();
             sc.nextLine();
 
-            System.out.print("Please input new quantity: ");
+            System.out.print("New quantity: ");
             int qty = sc.nextInt();
             sc.nextLine();
 
-            System.out.print("Please input new date (yyyy-mm-dd): ");
+            System.out.print("New date (yyyy-mm-dd): ");
             String date = sc.nextLine();
-
 
             ps.setString(1, name);
             ps.setDouble(2, unitPrice);
@@ -102,24 +97,26 @@ public class ProductList {
                 System.out.println("Update success");
 
 
-                for (int i = 0; i < products.size(); i++) {
-                    if (id == products.get(i).getPrdId()) {
+                for (int i = 0; i < Pagination.products.size(); i++) {
 
-                        // Replace old object with new updated object
-                        products.set(i, new Products(id, name, unitPrice, qty, date));
+                    if (Pagination.products.get(i).getPrdId() == id) {
+
+                        Pagination.products.set(i,
+                                new Products(id, name, unitPrice, qty, date));
+
+                        break;
                     }
                 }
 
             } else {
-                System.out.println("Update not success (ID not found)");
+                System.out.println("ID not found");
             }
 
-        } catch (SQLException e) {
-            System.out.println("Database error: " + e.getMessage());
-        } catch (IllegalArgumentException e) {
-            System.out.println("Invalid date format! Please use yyyy-mm-dd");
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
+
 
 
     public void deleteProduct() {
@@ -128,9 +125,8 @@ public class ProductList {
 
         try (Connection con = DbConncetion.getConnection()) {
 
-            String sql = "DELETE FROM products WHERE id = ?";
+            String sql = "DELETE FROM products WHERE id=?";
             PreparedStatement ps = con.prepareStatement(sql);
-
 
             System.out.print("Please input product id to delete: ");
             int id = sc.nextInt();
@@ -143,61 +139,22 @@ public class ProductList {
                 System.out.println("Delete success");
 
 
-                for (int i = 0; i < products.size(); i++) {
-                    if (id == products.get(i).getPrdId()) {
-                        products.remove(i);
+                for (int i = 0; i < Pagination.products.size(); i++) {
+
+                    if (Pagination.products.get(i).getPrdId() == id) {
+                        Pagination.products.remove(i);
                         break;
                     }
                 }
 
+                Pagination.total--;
+
             } else {
-                System.out.println("Delete not success (ID not found)");
+                System.out.println("ID not found");
             }
 
-        } catch (SQLException e) {
-            System.out.println("Database error: " + e.getMessage());
-        }
-
-    }
-
-    public void showProducts() {
-
-        products.clear();
-
-        try (Connection con = DbConncetion.getConnection()) {
-
-            String sql = "SELECT * FROM products";   // ← removed ORDER BY id
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-
-            System.out.println("===== PRODUCT LIST =====");
-
-            System.out.printf("%-5s %-15s %-10s %-5s %-12s%n",
-                    "ID", "Name", "Price", "Qty", "Date");
-
-            while (rs.next()) {
-
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                double price = rs.getDouble("unitprice");
-                int qty = rs.getInt("qty");
-                String date = rs.getDate("importdate").toString();
-
-                products.add(new Products(id, name, price, qty, date));
-
-                System.out.printf("%-5d %-15s %-10.2f %-5d %-12s%n",
-                        id, name, price, qty, date);
-            }
-
-            if (products.isEmpty()) {
-                System.out.println("No products found.");
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Database error: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
-
-
 }
-
