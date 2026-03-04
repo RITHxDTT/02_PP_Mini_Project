@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class InputString {
     Scanner sc = new Scanner(System.in);
@@ -20,5 +21,8 @@ public class InputString {
                 System.out.println(Colors.red + "Please folow the command instruction" + Colors.reset);
             }
         }
+    }
+    public boolean idValidate(String id){
+        return Pattern.matches("^[0-9]+$",id);
     }
 }
