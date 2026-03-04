@@ -1,3 +1,5 @@
+import org.fusesource.jansi.Ansi;
+
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -16,10 +18,10 @@ public class Main {
 
             InputString input = new InputString();
             System.out.println();
-            System.out.println("\t\t---------Stock Management---------\t\t");
+            System.out.println(Ansi.ansi().fgBrightCyan().a("\t\t---------Stock Management---------\t\t").reset());
             Pagination.displayProductName();
             System.out.println();
-            System.out.println("\t\t\t---------Menu---------\t\t");
+            System.out.println(Ansi.ansi().fgBlue().a("\t\t\t---------Menu---------\t\t").reset());
             System.out.println();
 
             System.out.println("\t N. Next Page \t P. Previous Page\t F. First page\t L. Last page\t ");
@@ -57,8 +59,9 @@ public class Main {
                 break;
             }
             else if(input.output.equalsIgnoreCase("r")){
+                ReadProductByid pr = new ReadProductByid();
+                pr.displayProductById();
 
-                break;
             }
             else if(input.output.equalsIgnoreCase("up")){
 

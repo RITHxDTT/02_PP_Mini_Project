@@ -1,3 +1,4 @@
+import org.fusesource.jansi.Ansi;
 import org.nocrala.tools.texttablefmt.BorderStyle;
 import org.nocrala.tools.texttablefmt.CellStyle;
 import org.nocrala.tools.texttablefmt.ShownBorders;
@@ -12,7 +13,7 @@ public class ReadProductByid {
         InputString input = new InputString();
         
         while (true){
-            System.out.print("Enter Product Id to search : ");
+            System.out.print(Ansi.ansi().fgBrightMagenta().a("Enter Product Id to search : ").reset());
             String id = sc.nextLine();
             Integer Id = 0;
             if(input.idValidate(id)){
@@ -43,29 +44,29 @@ public class ReadProductByid {
 
                         System.out.println(t.render());
 
-                        System.out.println("Do you want to continue? (y/n)");
+                        System.out.println(Ansi.ansi().fgYellow().a("Do you want to continue? (y/n)").reset());
                         String confirm = sc.nextLine();
                         if("Y".equalsIgnoreCase(confirm)){
 
                         }else {
-                            System.out.println("Press enter to continue...");
+                            System.out.println(Ansi.ansi().fgBlue().a("Press enter to continue...").reset());
                             sc.nextLine();
                             break;
                         }
 
                     }
                     else {
-                        System.out.println("Product ID not found");
+                        System.out.println(Ansi.ansi().fgRed().a("Product ID not found").reset());
 
                     }
 
                 }
                 catch(SQLException e){
-                    System.out.println("error connected to database: " + e.getMessage());
+                    System.out.println(Ansi.ansi().fgRed().a("error connected to database: " + e.getMessage()).reset());
                 }
 
             }else {
-                System.out.println("Please input number only");
+                System.out.println(Ansi.ansi().fgRed().a("Please input number only").reset());
 
             }
             
