@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Scanner;
 
 
-public class ProductList {
-    List<Products> products = new ArrayList<>();
+public class ProductList2 {
+   List<Products> products = new ArrayList<>();
 
     public void addProduct() {
         try (Scanner sc = new Scanner(System.in);
@@ -70,7 +70,7 @@ public class ProductList {
             String sql = "UPDATE products SET name = ?, unitprice = ?, qty = ?, importdate = ? WHERE id = ?";
             PreparedStatement ps = con.prepareStatement(sql);
 
-
+            // ===== Input values =====
             System.out.print("Please input product id: ");
             int id = sc.nextInt();
             sc.nextLine();
@@ -89,7 +89,7 @@ public class ProductList {
             System.out.print("Please input new date (yyyy-mm-dd): ");
             String date = sc.nextLine();
 
-
+            // ===== Set values to PreparedStatement =====
             ps.setString(1, name);
             ps.setDouble(2, unitPrice);
             ps.setInt(3, qty);
