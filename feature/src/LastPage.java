@@ -2,6 +2,7 @@ import org.nocrala.tools.texttablefmt.BorderStyle;
 import org.nocrala.tools.texttablefmt.CellStyle;
 import org.nocrala.tools.texttablefmt.ShownBorders;
 import org.nocrala.tools.texttablefmt.Table;
+import java.text.DecimalFormat;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -58,8 +59,8 @@ public class LastPage {
             }
 
             // 3. Add the Footer
-            t.addCell("Page : " +NumberDisplay.pageIndex  +" of " + NumberDisplay.totalPage, new CellStyle(CellStyle.HorizontalAlign.left), 2);
-            t.addCell("Total Record :" + NumberDisplay.total , new CellStyle(CellStyle.HorizontalAlign.center), 3);
+            t.addCell("Page : " +NumberDisplay.pageIndex  +" of " + NumberDisplay.totalPage, new CellStyle(CellStyle.HorizontalAlign.LEFT), 2);
+            t.addCell("Total Record :" + NumberDisplay.total , new CellStyle(CellStyle.HorizontalAlign.CENTER), 3);
 
             // 4. Render
             System.out.println(t.render());

@@ -12,5 +12,11 @@
     <orderEntry type="module" module-name="util" />
     <orderEntry type="module" module-name="color" />
     <orderEntry type="library" name="postgresql-42.2.29.jre8" level="project" />
+    <orderEntry type="library" name="postgresql-42.7.10" level="project" />
+    <orderEntry type="library" name="text-table-formatter-1.2.5" level="project" />
+    <orderEntry type="module" module-name="model" exported="" />
+    <orderEntry type="module" module-name="stock" exported="" />
+    <orderEntry type="module" module-name="stockMangement" exported="" />
+    <orderEntry type="module" module-name="validation" exported="" />
   </component>
 </module>
