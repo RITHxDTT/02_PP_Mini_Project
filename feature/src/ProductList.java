@@ -101,7 +101,7 @@ public class ProductList {
             if (row == 1) {
                 System.out.println("Update success");
 
-                // ===== Update ArrayList =====
+
                 for (int i = 0; i < products.size(); i++) {
                     if (id == products.get(i).getPrdId()) {
 
